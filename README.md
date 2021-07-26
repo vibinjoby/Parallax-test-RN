@@ -2,6 +2,7 @@
 
 
  The Title moves to the top and merges along with the navigation bar when the user scrolls to the bottom and goes back to the previous position when the user scrolls to the top
+ When there is not enough content to scroll, the navigation bar will display by default
 
 android | iOS
 --- | ---
