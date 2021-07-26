@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  StyleSheet,
-  FlatList,
-  Platform,
-} from 'react-native';
-import { HeaderBackButton } from '@react-navigation/stack';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import MovableTitle from './components/MovableTitle';
+import ScrollableContent from './components/ScrollableContent';
 
 type RootStackParamList = {
   Home: undefined;
@@ -18,99 +10,56 @@ type RootStackParamList = {
 
 type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
-const Home = ({ navigation }: Props) => {
-  const [scrollY] = useState(new Animated.Value(0));
-  const dataSource = [
-    'Dummy',
-    'data',
-    'Dummy',
-    'data',
-    'Dummy',
-    'data',
-    'Dummy',
-    'data',
-    'Dummy',
-    'data',
-    'Dummy',
-    'data',
-    'Dummy',
-  ];
-
-  var headerOpacity = scrollY.interpolate({
-    inputRange: [0, 70, 71],
-    outputRange: [0, 0, 1],
-  });
-  useEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        opacity: headerOpacity,
-      },
-      headerLeft: () => <HeaderBackButton />,
-      headerBackground: () => (
-        <Animated.View style={[styles.headerBg, { opacity: headerOpacity }]} />
-      ),
-      headerTransparent: true,
-    });
-  }, [headerOpacity, navigation]);
-
-  const renderRow = (rowData: string) => (
-    <View style={styles.rowStyle}>
-      <Text>{rowData}</Text>
-    </View>
-  );
-
-  const renderScroll = (props: any) => (
-    <Animated.ScrollView
-      {...props}
-      bounces={false}
-      scrollEventThrottle={16}
-      contentContainerStyle={{
-        paddingTop: Platform.OS === 'ios' ? 100 : 70,
-      }}
-      onScroll={Animated.event(
-        [
-          {
-            nativeEvent: { contentOffset: { y: scrollY } },
-          },
-        ],
-        {
-          useNativeDriver: true,
-        },
-      )}
-    />
+const Home = ({ navigation, route }: Props) => {
+  const Render = () => (
+    <>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+      <View style={styles.rowStyle}>
+        <Text>Data</Text>
+      </View>
+    </>
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={dataSource}
-        renderItem={({ item }) => renderRow(item)}
-        keyExtractor={(_, index) => index.toString()}
-        renderScrollComponent={renderScroll}
-      />
-      <MovableTitle title={'Invoices'} scrollY={scrollY} />
-    </View>
+    <ScrollableContent
+      title="Invoices"
+      navigation={navigation}
+      route={route}
+      children={<Render />}
+    />
   );
 };
 
-export default Home;
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  headerBg: {
-    backgroundColor: 'white',
-    ...StyleSheet.absoluteFillObject,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 7,
-  },
   rowStyle: {
     height: 60,
     borderWidth: 1,
@@ -119,3 +68,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default Home;
